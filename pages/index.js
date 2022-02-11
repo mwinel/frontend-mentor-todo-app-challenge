@@ -4,7 +4,7 @@ export default function Home() {
     const { theme, setTheme } = useTheme();
 
     return (
-        <div>
+        <div className='bg-bright-blue'>
             <h1 className="text-4xl font-bold text-gray-800 dark:text-white">
                 TODO
             </h1>
