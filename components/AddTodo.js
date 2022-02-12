@@ -3,17 +3,36 @@ import { TextInput } from '.';
 
 export default function AddTodo({ lastID, onSendTodo }) {
     let [title, setTitle] = useState('');
+    let [errors, setErrors] = useState({});
+
+    const handleValidation = () => {
+        let tempErrors = {};
+        let isValid = true;
+
+        if (title.length <= 0) {
+            tempErrors['title'] = true;
+            isValid = false;
+        }
+
+        setErrors({ ...tempErrors });
+        return isValid;
+    };
 
     const handleAddTodo = async (e) => {
         e.preventDefault();
-        const newTodo = {
-            id: lastID + 1,
-            title: title,
-            completed: false,
-        };
+        let isFormValid = handleValidation();
 
-        onSendTodo(newTodo);
-        setTitle('');
+        if (isFormValid) {
+            const newTodo = {
+                id: lastID + 1,
+                title: title,
+                completed: false,
+            };
+
+            onSendTodo(newTodo);
+            setTitle('');
+        }
+        return;
     };
 
     return (
@@ -26,6 +45,7 @@ export default function AddTodo({ lastID, onSendTodo }) {
                 onChange={(e) => {
                     setTitle(e.target.value);
                 }}
+                error={errors.title && 'Todo title is required.'}
             />
         </form>
     );

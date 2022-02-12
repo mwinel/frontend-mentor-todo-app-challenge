@@ -1,4 +1,5 @@
 const { fontFamily } = require('tailwindcss/defaultTheme');
+const colors = require('tailwindcss/colors');
 
 module.exports = {
     darkMode: 'class',
@@ -18,6 +19,7 @@ module.exports = {
         colors: {
             transparent: 'transparent',
             current: 'currentColor',
+            red: colors.red,
             neutral: '#FFFFFF',
             'bright-blue': '#3A7BFD',
             'check-bg-one': '#57DDFF',
