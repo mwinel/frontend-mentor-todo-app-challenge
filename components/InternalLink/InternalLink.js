@@ -1,8 +1,8 @@
-export default function InternalLink({ title, onClearCompletedTodos }) {
+export default function InternalLink({ title, onClick }) {
     return (
         <a
             className="text-dark-grayish-blue cursor-pointer hover:text-very-dark-grayish-blue"
-            onClick={onClearCompletedTodos}
+            onClick={onClick}
         >
             {title}
         </a>

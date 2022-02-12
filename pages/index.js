@@ -16,6 +16,19 @@ export default function Home() {
     const [todos, setTodos] = useState(TODOS);
     const { theme, setTheme } = useTheme();
 
+    const fetchTodos = useCallback(async () => {
+        try {
+            const { data } = await axios.get('./data.json');
+            setTodos(data);
+        } catch (err) {
+            console.log(err);
+        }
+    }, []);
+
+    useEffect(() => {
+        fetchTodos();
+    }, [fetchTodos]);
+
     const handleDeleteTodo = (id) => {
         setTodos(todos.filter((todo) => todo.id !== id));
     };
@@ -38,19 +51,6 @@ export default function Home() {
     const handleClearCompletedTodos = () => {
         setTodos(todos.filter((todo) => !todo.completed));
     };
-
-    const fetchTodos = useCallback(async () => {
-        try {
-            const { data } = await axios.get('./data.json');
-            setTodos(data);
-        } catch (err) {
-            console.log(err);
-        }
-    }, []);
-
-    useEffect(() => {
-        fetchTodos();
-    }, [fetchTodos]);
 
     return (
         <div className="relative">
@@ -101,15 +101,23 @@ export default function Home() {
                                 items left
                             </div>
                             <div className="flex items-center space-x-4">
-                                <InternalLink title="All" />
-                                <InternalLink title="Active" />
-                                <InternalLink title="Completed" />
+                                <InternalLink
+                                    title="All"
+                                    onClick={() => fetchTodos()}
+                                />
+                                <InternalLink
+                                    title="Active"
+                                    onClick={handleFilterActiveTodos}
+                                />
+                                <InternalLink
+                                    title="Completed"
+                                    onClick={handleFilterCompletedTodos}
+                                />
                             </div>
+
                             <InternalLink
                                 title="Clear completed"
-                                onClearCompletedTodos={
-                                    handleClearCompletedTodos
-                                }
+                                onClick={handleClearCompletedTodos}
                             />
                         </div>
                     </div>
