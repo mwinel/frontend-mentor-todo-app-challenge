@@ -1,0 +1,4 @@
+[
+    { "id": 1, "title": "Learn something new", "completed": false },
+    { "id": 2, "title": "Go for lunch at cafe javas", "completed": false }
+]

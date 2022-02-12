@@ -8,6 +8,13 @@ module.exports = {
     ],
     theme: {
         typography: (theme) => ({}),
+        fontSize: {
+            'body-base': ['18px', '24px'],
+            xl: ['40px', '48px'],
+        },
+        letterSpacing: {
+            widest: '.35em',
+        },
         colors: {
             transparent: 'transparent',
             current: 'currentColor',
@@ -26,7 +33,7 @@ module.exports = {
             'light-grayish-blue': '#CACDE8',
             'very-light-grayish-blue': '#E4E5F1',
             'dark-grayish-blue': '#777A92',
-            'very-dark-grayish-blue': '	#4D5066',
+            // 'very-dark-grayish-blue': '	#4D5066',
         },
         extend: {
             fontFamily: {
@@ -35,5 +42,8 @@ module.exports = {
         },
     },
     variants: {},
-    plugins: [require('@tailwindcss/typography')],
+    plugins: [
+        require('@tailwindcss/typography'),
+        require('@tailwindcss/forms'),
+    ],
 };
