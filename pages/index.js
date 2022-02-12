@@ -2,7 +2,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { useTheme } from 'next-themes';
 import axios from 'axios';
 
-import { Header, TextInput, TodoList, Footer } from '../components';
+import { Header, TodoList, Footer } from '../components';
+import AddTodo from '../components/AddTodo';
 
 const TODOS = [
     { id: 1, title: 'Learn something new...', completed: false },
@@ -29,7 +30,7 @@ export default function Home() {
     }, [fetchTodos]);
 
     return (
-        <div className="min-h-screen relative bg-very-light-gray dark:bg-very-dark-blue">
+        <div className="relative">
             <div
                 className="relative h-[340px] bg-light-grayish-blue bg-no-repeat bg-cover"
                 style={{
@@ -42,10 +43,13 @@ export default function Home() {
             <div className="w-full absolute top-24 left-0">
                 <div className="w-[620px] mx-auto top- left-0">
                     <Header theme={theme} setTheme={setTheme} />
-                    <TextInput
-                        name="todo"
-                        type="text"
-                        placeholder="Add your todo..."
+                    <AddTodo
+                        onSendTodo={(todo) => setTodos([...todos, todo])}
+                        lastID={todos.reduce(
+                            (max, item) =>
+                                Number(item.id) > max ? Number(item.id) : max,
+                            0
+                        )}
                     />
                     <TodoList todos={todos} />
                     {todos.length ? <Footer /> : null}
