@@ -63,7 +63,7 @@ export default function Home() {
                             : `url("/images/bg-desktop-light.jpg")`,
                 }}
             ></div>
-            <div className="w-full absolute top-24 left-0">
+            <div className="absolute left-0 w-full top-24">
                 <div className="w-[620px] mx-auto top- left-0">
                     <Header theme={theme} setTheme={setTheme} />
                     <AddTodo
@@ -75,7 +75,7 @@ export default function Home() {
                         )}
                     />
 
-                    <div className="bg-neutral rounded-md shadow-lg mt-6 divide-y divide-very-light-grayish-blue dark:bg-very-dark-desaturated-blue dark:divide-very-dark-grayish-blue">
+                    <div className="mt-6 divide-y rounded-md shadow-lg bg-neutral divide-very-light-grayish-blue dark:bg-very-dark-desaturated-blue dark:divide-very-dark-grayish-blue">
                         {todos.length ? (
                             <>
                                 {todos.map((todo) => (
@@ -88,31 +88,22 @@ export default function Home() {
                                 ))}
                             </>
                         ) : (
-                            <div className="flex justify-center items-center p-5">
+                            <div className="flex items-center justify-center p-5">
                                 <p className="pt-1 text-body-base text-very-dark-grayish-blue dark:text-light-grayish-blue">
                                     You do not have any todos at the moment
                                 </p>
                             </div>
                         )}
                         {/* todo list footer */}
-                        <div className="px-5 py-4 flex items-center justify-between">
+                        <div className="flex items-center justify-between px-5 py-4">
                             <div className="text-dark-grayish-blue">
                                 {todos.filter((todo) => !todo.completed).length}{' '}
                                 items left
                             </div>
                             <div className="flex items-center space-x-4">
-                                <InternalLink
-                                    title="All"
-                                    onClick={() => fetchTodos()}
-                                />
-                                <InternalLink
-                                    title="Active"
-                                    onClick={handleFilterActiveTodos}
-                                />
-                                <InternalLink
-                                    title="Completed"
-                                    onClick={handleFilterCompletedTodos}
-                                />
+                                <InternalLink title="All" />
+                                <InternalLink title="Active" />
+                                <InternalLink title="Completed" />
                             </div>
 
                             <InternalLink
