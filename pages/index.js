@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useTheme } from 'next-themes';
 import axios from 'axios';
 
-import { Header, TodoList, Footer } from '../components';
+import { Header, TodoItem, InternalLink, Footer } from '../components';
 import AddTodo from '../components/AddTodo';
 
 const TODOS = [
@@ -51,7 +51,44 @@ export default function Home() {
                             0
                         )}
                     />
-                    <TodoList todos={todos} />
+
+                    <div className="bg-neutral rounded-md shadow-lg mt-6 divide-y divide-very-light-grayish-blue dark:bg-very-dark-desaturated-blue dark:divide-very-dark-grayish-blue">
+                        {todos.length ? (
+                            <>
+                                {todos.map((todo) => (
+                                    <TodoItem
+                                        key={todo.id}
+                                        todo={todo}
+                                        onDeleteTodo={(todoId) => {
+                                            setTodos(
+                                                todos.filter(
+                                                    (todo) => todo.id !== todoId
+                                                )
+                                            );
+                                        }}
+                                    />
+                                ))}
+                            </>
+                        ) : (
+                            <div className="flex justify-center items-center p-5">
+                                <p className="pt-1 text-body-base text-very-dark-grayish-blue dark:text-light-grayish-blue">
+                                    You do not have any todos at the moment
+                                </p>
+                            </div>
+                        )}
+                        {/* todo list footer */}
+                        <div className="px-5 py-4 flex items-center justify-between">
+                            <div className="text-dark-grayish-blue">
+                                {todos.length} items left
+                            </div>
+                            <div className="flex items-center space-x-4">
+                                <InternalLink title="All" />
+                                <InternalLink title="Active" />
+                                <InternalLink title="Completed" />
+                            </div>
+                            <InternalLink title="Clear completed" />
+                        </div>
+                    </div>
                     {todos.length ? <Footer /> : null}
                 </div>
             </div>
