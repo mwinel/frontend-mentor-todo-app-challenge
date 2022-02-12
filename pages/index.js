@@ -35,6 +35,10 @@ export default function Home() {
         );
     };
 
+    const handleClearCompletedTodos = () => {
+        setTodos(todos.filter((todo) => !todo.completed));
+    };
+
     const fetchTodos = useCallback(async () => {
         try {
             const { data } = await axios.get('./data.json');
@@ -101,7 +105,12 @@ export default function Home() {
                                 <InternalLink title="Active" />
                                 <InternalLink title="Completed" />
                             </div>
-                            <InternalLink title="Clear completed" />
+                            <InternalLink
+                                title="Clear completed"
+                                onClearCompletedTodos={
+                                    handleClearCompletedTodos
+                                }
+                            />
                         </div>
                     </div>
                     {todos.length ? <Footer /> : null}
