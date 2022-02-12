@@ -105,7 +105,6 @@ export default function Home() {
                                 <InternalLink title="Active" />
                                 <InternalLink title="Completed" />
                             </div>
-
                             <InternalLink
                                 title="Clear completed"
                                 onClick={handleClearCompletedTodos}

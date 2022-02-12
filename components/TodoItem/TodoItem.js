@@ -2,16 +2,28 @@ import classNames from '../../utils/classnames';
 
 export default function TodoItem({ todo, onDeleteTodo, onCompleteTodo }) {
     return (
-        <div className="flex justify-between items-center p-5">
-            <div className="flex justify-between items-center">
-                <div className="flex justify-center space-x-6 items-center">
+        <div className="flex items-center justify-between p-5">
+            <div className="flex items-center justify-between">
+                <div className="flex items-center justify-center space-x-6">
                     <div
                         className={classNames(
-                            'h-6 w-6 rounded-full bg-bright-lue border cursor-pointer',
-                            'border-very-light-grayish-blue dark:border-very-dark-grayish-blue'
+                            'flex items-center justify-center h-6 w-6 rounded-full border cursor-pointer',
+                            'border-very-light-grayish-blue dark:border-very-dark-grayish-blue',
+                            'hover:border-gradient-to-r hover:border-from-check-bg-one hover:border-to-check-bg-two',
+                            todo.completed
+                                ? 'bg-gradient-to-r from-check-bg-one to-check-bg-two'
+                                : 'none'
                         )}
                         onClick={() => onCompleteTodo(todo)}
-                    />
+                    >
+                        {todo.completed && (
+                            <img
+                                src="/images/icon-check.svg"
+                                alt="icon check"
+                                className="w-2.5 h-2.5"
+                            />
+                        )}
+                    </div>
                     <p
                         className={classNames(
                             'pt-1 text-body-base text-very-dark-grayish-blue dark:text-light-grayish-blue',
@@ -23,13 +35,13 @@ export default function TodoItem({ todo, onDeleteTodo, onCompleteTodo }) {
                 </div>
             </div>
             <div
-                className="flex justify-between items-center cursor-pointer"
+                className="flex items-center justify-between cursor-pointer"
                 onClick={() => onDeleteTodo(todo.id)}
             >
                 <img
                     src="/images/icon-cross.svg"
                     alt="icon cross"
-                    className="h-4 w-4"
+                    className="w-4 h-4"
                 />
             </div>
         </div>
