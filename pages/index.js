@@ -16,6 +16,10 @@ export default function Home() {
     const [todos, setTodos] = useState(TODOS);
     const { theme, setTheme } = useTheme();
 
+    const handleDeleteTodo = (id) => {
+        setTodos(todos.filter((todo) => todo.id !== id));
+    };
+
     const handleCompleteTodo = (item) => {
         setTodos(
             todos.map((todo) => {
@@ -74,13 +78,7 @@ export default function Home() {
                                     <TodoItem
                                         key={todo.id}
                                         todo={todo}
-                                        onDeleteTodo={(todoId) => {
-                                            setTodos(
-                                                todos.filter(
-                                                    (todo) => todo.id !== todoId
-                                                )
-                                            );
-                                        }}
+                                        onDeleteTodo={handleDeleteTodo}
                                         onCompleteTodo={handleCompleteTodo}
                                     />
                                 ))}
@@ -95,7 +93,8 @@ export default function Home() {
                         {/* todo list footer */}
                         <div className="px-5 py-4 flex items-center justify-between">
                             <div className="text-dark-grayish-blue">
-                                {todos.length} items left
+                                {todos.filter((todo) => !todo.completed).length}{' '}
+                                items left
                             </div>
                             <div className="flex items-center space-x-4">
                                 <InternalLink title="All" />
