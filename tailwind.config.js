@@ -35,7 +35,6 @@ module.exports = {
             'light-grayish-blue': '#CACDE8',
             'very-light-grayish-blue': '#E4E5F1',
             'dark-grayish-blue': '#777A92',
-            // 'very-dark-grayish-blue': '	#4D5066',
         },
         extend: {
             fontFamily: {

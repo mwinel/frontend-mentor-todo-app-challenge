@@ -1,8 +1,15 @@
+import { useState } from 'react';
 import classNames from '../../utils/classnames';
 
 export default function TodoItem({ todo, onDeleteTodo, onCompleteTodo }) {
+    const [hovered, setHovered] = useState(false);
+
     return (
-        <div className="flex items-center justify-between p-5">
+        <div
+            className="flex items-center justify-between p-5 cursor-pointer"
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+        >
             <div className="flex items-center justify-between">
                 <div className="flex items-center justify-center space-x-6">
                     <div
@@ -34,16 +41,18 @@ export default function TodoItem({ todo, onDeleteTodo, onCompleteTodo }) {
                     </p>
                 </div>
             </div>
-            <div
-                className="flex items-center justify-between cursor-pointer"
-                onClick={() => onDeleteTodo(todo.id)}
-            >
-                <img
-                    src="/images/icon-cross.svg"
-                    alt="icon cross"
-                    className="w-4 h-4"
-                />
-            </div>
+            {hovered && (
+                <div
+                    className="flex items-center justify-center cursor-pointer"
+                    onClick={() => onDeleteTodo(todo.id)}
+                >
+                    <img
+                        src="/images/icon-cross.svg"
+                        alt="icon cross"
+                        className="w-4 h-4"
+                    />
+                </div>
+            )}
         </div>
     );
 }
