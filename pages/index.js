@@ -6,7 +6,7 @@ import { Header, TodoItem, InternalLink, Footer } from '../components';
 import AddTodo from '../components/AddTodo';
 
 const TODOS = [
-    { id: 1, title: 'Learn something new...', completed: false },
+    { id: 1, title: 'Learn something new...', completed: true },
     { id: 2, title: 'Go for lunch at cafe javas', completed: false },
     { id: 3, title: 'Learn something new part two...', completed: false },
     { id: 4, title: 'Go and pick up my dinner', completed: false },
@@ -15,6 +15,21 @@ const TODOS = [
 export default function Home() {
     const [todos, setTodos] = useState(TODOS);
     const { theme, setTheme } = useTheme();
+
+    const handleCompleteTodo = (item) => {
+        setTodos(
+            todos.map((todo) => {
+                if (todo.id === item.id) {
+                    return {
+                        ...todo,
+                        completed: !todo.completed,
+                    };
+                } else {
+                    return todo;
+                }
+            })
+        );
+    };
 
     const fetchTodos = useCallback(async () => {
         try {
@@ -66,6 +81,7 @@ export default function Home() {
                                                 )
                                             );
                                         }}
+                                        onCompleteTodo={handleCompleteTodo}
                                     />
                                 ))}
                             </>
