@@ -11,8 +11,8 @@ export default function FilterLinks({ filter, filterNames, setFilter }) {
                     className={classNames(
                         name === filter
                             ? 'text-bright-blue'
-                            : 'text-dark-grayish-blue cursor-pointer',
-                        'cursor-pointer hover:text-very-dark-grayish-blue',
+                            : 'cursor-pointer text-dark-grayish-blue',
+                        'hover:text-very-dark-grayish-blue',
                         'dark:hover:text-very-light-gray'
                     )}
                 >

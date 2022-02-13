@@ -5,17 +5,8 @@ import axios from 'axios';
 import { Header, TodoItem, FilterLinks, Footer } from '../components';
 import AddTodo from '../components/AddTodo';
 
-const TODOS = [
-    { id: 1, title: 'Learn something new...', completed: true },
-    { id: 2, title: 'Go for lunch at cafe javas', completed: false },
-    { id: 3, title: 'Learn something new part two...', completed: false },
-    { id: 4, title: 'Go and pick up my dinner', completed: false },
-    // { id: 5, title: 'Go and pick up my dinner', completed: false },
-    // { id: 6, title: 'Go and pick up my dinner', completed: false },
-];
-
 export default function Home() {
-    const [todos, setTodos] = useState(TODOS);
+    const [todos, setTodos] = useState([]);
     const [filter, setFilter] = useState('All');
     const { theme, setTheme } = useTheme();
 
@@ -68,7 +59,7 @@ export default function Home() {
     return (
         <div className="relative">
             <div
-                className="relative h-[260px] bg-light-grayish-blue bg-no-repeat bg-cover lg:h-[320px]"
+                className="relative h-[260px] bg-light-grayish-blue bg-cover bg-no-repeat lg:h-[320px]"
                 style={{
                     backgroundImage:
                         theme === 'dark'
@@ -76,8 +67,8 @@ export default function Home() {
                             : `url("/images/bg-desktop-light.jpg")`,
                 }}
             ></div>
-            <div className="absolute left-0 w-full top-14 lg:top-24">
-                <div className="top-0 left-0 px-4 mx-auto lg:px-0 lg:w-[620px]">
+            <div className="absolute left-0 top-14 w-full lg:top-24">
+                <div className="top-0 left-0 mx-auto px-4 lg:w-[620px] lg:px-0">
                     <Header theme={theme} setTheme={setTheme} />
                     <AddTodo
                         onSendTodo={(todo) => setTodos([...todos, todo])}
@@ -87,7 +78,7 @@ export default function Home() {
                             0
                         )}
                     />
-                    <div className="mt-4 divide-y rounded-md shadow-lg bg-neutral divide-very-light-grayish-blue dark:bg-very-dark-desaturated-blue dark:divide-very-dark-grayish-blue lg:mt-6">
+                    <div className="mt-4 divide-y divide-very-light-grayish-blue rounded-md bg-neutral shadow-lg dark:divide-very-dark-grayish-blue dark:bg-very-dark-desaturated-blue lg:mt-6">
                         {filteredTodos.length ? (
                             <>
                                 {filteredTodos.map((todo) => (
@@ -119,7 +110,7 @@ export default function Home() {
                                     items left
                                 </p>
                             </div>
-                            <div className="hidden lg:w-6/12 lg:flex lg:justify-center">
+                            <div className="hidden lg:flex lg:w-6/12 lg:justify-center">
                                 <FilterLinks
                                     filterNames={FILTER_NAMES}
                                     filter={filter}
@@ -137,12 +128,14 @@ export default function Home() {
                         </div>
                     </div>
                     {/* filter links mobile */}
-                    <div className="flex items-center justify-center py-4 mt-4 rounded-md shadow-lg bg-neutral dark:bg-very-dark-desaturated-blue lg:hidden">
-                        <FilterLinks
-                            filterNames={FILTER_NAMES}
-                            filter={filter}
-                            setFilter={setFilter}
-                        />
+                    <div className="mt-4 lg:hidden">
+                        <div className="flex items-center justify-center rounded-md bg-neutral py-4 shadow-lg dark:bg-very-dark-desaturated-blue">
+                            <FilterLinks
+                                filterNames={FILTER_NAMES}
+                                filter={filter}
+                                setFilter={setFilter}
+                            />
+                        </div>
                     </div>
                     {todos.length ? <Footer /> : null}
                 </div>

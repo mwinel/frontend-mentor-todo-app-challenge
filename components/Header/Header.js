@@ -4,7 +4,6 @@ export default function Header({ theme, setTheme }) {
             <div className="text-xl font-bold tracking-widest text-neutral">
                 TODO
             </div>
-
             <div
                 className="-mt-2 cursor-pointer"
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}

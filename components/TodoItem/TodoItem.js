@@ -6,7 +6,7 @@ export default function TodoItem({ todo, onDeleteTodo, onCompleteTodo }) {
 
     return (
         <div
-            className="flex items-center justify-between p-5 cursor-pointer"
+            className="flex cursor-pointer items-center justify-between p-5"
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
         >
@@ -14,7 +14,7 @@ export default function TodoItem({ todo, onDeleteTodo, onCompleteTodo }) {
                 <div className="flex items-center justify-center">
                     <div
                         className={classNames(
-                            'flex items-center justify-center h-6 w-6 rounded-full border cursor-pointer',
+                            'flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border',
                             'border-very-light-grayish-blue dark:border-very-dark-grayish-blue',
                             'hover:border-gradient-to-r hover:border-from-check-bg-one hover:border-to-check-bg-two',
                             todo.completed
@@ -27,13 +27,13 @@ export default function TodoItem({ todo, onDeleteTodo, onCompleteTodo }) {
                             <img
                                 src="/images/icon-check.svg"
                                 alt="icon check"
-                                className="w-2.5 h-2.5"
+                                className="h-2.5 w-2.5"
                             />
                         ) : null}
                     </div>
                     <p
                         className={classNames(
-                            'text-very-dark-grayish-blue dark:text-light-grayish-blue mx-3 lg:text-body-base',
+                            'mx-3 text-very-dark-grayish-blue dark:text-light-grayish-blue lg:text-body-base',
                             todo.completed ? 'line-through' : 'none'
                         )}
                     >
@@ -45,13 +45,13 @@ export default function TodoItem({ todo, onDeleteTodo, onCompleteTodo }) {
             {/* cross icon */}
             {hovered && (
                 <div
-                    className="hidden lg:cursor-pointer lg:flex lg:justify-center lg:items-center"
+                    className="hidden lg:flex lg:cursor-pointer lg:items-center lg:justify-center"
                     onClick={() => onDeleteTodo(todo.id)}
                 >
                     <img
                         src="/images/icon-cross.svg"
                         alt="icon cross"
-                        className="w-4 h-4"
+                        className="h-4 w-4"
                     />
                 </div>
             )}
@@ -62,7 +62,7 @@ export default function TodoItem({ todo, onDeleteTodo, onCompleteTodo }) {
                 <img
                     src="/images/icon-cross.svg"
                     alt="icon cross"
-                    className="w-4 h-4"
+                    className="h-4 w-4"
                 />
             </div>
         </div>
