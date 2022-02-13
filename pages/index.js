@@ -55,7 +55,7 @@ export default function Home() {
     return (
         <div className="relative">
             <div
-                className="relative h-[340px] bg-light-grayish-blue bg-no-repeat bg-cover"
+                className="relative h-[320px] bg-light-grayish-blue bg-no-repeat bg-cover"
                 style={{
                     backgroundImage:
                         theme === 'dark'
