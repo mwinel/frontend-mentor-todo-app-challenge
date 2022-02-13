@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useTheme } from 'next-themes';
 import axios from 'axios';
 
-import { Header, TodoItem, InternalLink, Footer } from '../components';
+import { Header, TodoItem, FilterLinks, Footer } from '../components';
 import AddTodo from '../components/AddTodo';
 
 const TODOS = [
@@ -14,6 +14,7 @@ const TODOS = [
 
 export default function Home() {
     const [todos, setTodos] = useState(TODOS);
+    const [filter, setFilter] = useState('All');
     const { theme, setTheme } = useTheme();
 
     const fetchTodos = useCallback(async () => {
@@ -52,6 +53,16 @@ export default function Home() {
         setTodos(todos.filter((todo) => !todo.completed));
     };
 
+    const FILTER_MAP = {
+        All: () => true,
+        Active: (todo) => !todo.completed,
+        Completed: (todo) => todo.completed,
+    };
+    
+    const FILTER_NAMES = Object.keys(FILTER_MAP);
+
+    const filteredTodos = todos.filter(FILTER_MAP[filter]);
+
     return (
         <div className="relative">
             <div
@@ -74,11 +85,10 @@ export default function Home() {
                             0
                         )}
                     />
-
                     <div className="mt-6 divide-y rounded-md shadow-lg bg-neutral divide-very-light-grayish-blue dark:bg-very-dark-desaturated-blue dark:divide-very-dark-grayish-blue">
-                        {todos.length ? (
+                        {filteredTodos.length ? (
                             <>
-                                {todos.map((todo) => (
+                                {filteredTodos.map((todo) => (
                                     <TodoItem
                                         key={todo.id}
                                         todo={todo}
@@ -90,25 +100,38 @@ export default function Home() {
                         ) : (
                             <div className="flex items-center justify-center p-5">
                                 <p className="pt-1 text-body-base text-very-dark-grayish-blue dark:text-light-grayish-blue">
-                                    You do not have any todos at the moment
+                                    {filter === 'All'
+                                        ? `You do not have any todos at the moment`
+                                        : `You do not have any ${filter.toLowerCase()} todos at the moment`}
                                 </p>
                             </div>
                         )}
                         {/* todo list footer */}
                         <div className="flex items-center justify-between px-5 py-4">
-                            <div className="text-dark-grayish-blue">
-                                {todos.filter((todo) => !todo.completed).length}{' '}
-                                items left
+                            <div className="w-3/12">
+                                <p className="text-dark-grayish-blue">
+                                    {
+                                        todos.filter((todo) => !todo.completed)
+                                            .length
+                                    }{' '}
+                                    items left
+                                </p>
                             </div>
-                            <div className="flex items-center space-x-4">
-                                <InternalLink title="All" />
-                                <InternalLink title="Active" />
-                                <InternalLink title="Completed" />
+                            <div className="w-6/12 flex items-center justify-center">
+                                <FilterLinks
+                                    filterNames={FILTER_NAMES}
+                                    filter={filter}
+                                    setFilter={setFilter}
+                                />
                             </div>
-                            <InternalLink
-                                title="Clear completed"
-                                onClick={handleClearCompletedTodos}
-                            />
+                            <div className="w-3/12 flex justify-end">
+                                <a
+                                    className="text-dark-grayish-blue cursor-pointer hover:text-very-dark-grayish-blue dark:hover:text-very-light-gray"
+                                    onClick={handleClearCompletedTodos}
+                                >
+                                    Clear completed
+                                </a>
+                            </div>
                         </div>
                     </div>
                     {todos.length ? <Footer /> : null}
