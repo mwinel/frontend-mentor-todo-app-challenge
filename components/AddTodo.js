@@ -36,7 +36,7 @@ export default function AddTodo({ lastID, onSendTodo }) {
     };
 
     return (
-        <form onSubmit={handleAddTodo}>
+        <form onSubmit={handleAddTodo} className="mt-8 lg:mt-10">
             <TextInput
                 name="todo"
                 type="text"

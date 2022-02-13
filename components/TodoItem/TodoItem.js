@@ -11,7 +11,7 @@ export default function TodoItem({ todo, onDeleteTodo, onCompleteTodo }) {
             onMouseLeave={() => setHovered(false)}
         >
             <div className="flex items-center justify-between">
-                <div className="flex items-center justify-center space-x-6">
+                <div className="flex items-center justify-center">
                     <div
                         className={classNames(
                             'flex items-center justify-center h-6 w-6 rounded-full border cursor-pointer',
@@ -23,17 +23,17 @@ export default function TodoItem({ todo, onDeleteTodo, onCompleteTodo }) {
                         )}
                         onClick={() => onCompleteTodo(todo)}
                     >
-                        {todo.completed && (
+                        {todo.completed ? (
                             <img
                                 src="/images/icon-check.svg"
                                 alt="icon check"
                                 className="w-2.5 h-2.5"
                             />
-                        )}
+                        ) : null}
                     </div>
                     <p
                         className={classNames(
-                            'pt-1 text-body-base text-very-dark-grayish-blue dark:text-light-grayish-blue',
+                            'text-very-dark-grayish-blue dark:text-light-grayish-blue mx-3 lg:text-body-base',
                             todo.completed ? 'line-through' : 'none'
                         )}
                     >
@@ -41,9 +41,11 @@ export default function TodoItem({ todo, onDeleteTodo, onCompleteTodo }) {
                     </p>
                 </div>
             </div>
+
+            {/* cross icon */}
             {hovered && (
                 <div
-                    className="flex items-center justify-center cursor-pointer"
+                    className="hidden lg:cursor-pointer lg:flex lg:justify-center lg:items-center"
                     onClick={() => onDeleteTodo(todo.id)}
                 >
                     <img
@@ -53,6 +55,16 @@ export default function TodoItem({ todo, onDeleteTodo, onCompleteTodo }) {
                     />
                 </div>
             )}
+            <div
+                className="flex items-center justify-center lg:hidden"
+                onClick={() => onDeleteTodo(todo.id)}
+            >
+                <img
+                    src="/images/icon-cross.svg"
+                    alt="icon cross"
+                    className="w-4 h-4"
+                />
+            </div>
         </div>
     );
 }
