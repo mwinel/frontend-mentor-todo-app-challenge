@@ -1,11 +1,9 @@
 export default function Header({ theme, setTheme }) {
     return (
-        <div className="flex items-center justify-between">
-            <div className="text-xl font-bold tracking-widest text-neutral">
-                TODO
-            </div>
+        <div className="header">
+            <div className="header-title">TODO</div>
             <div
-                className="-mt-2 cursor-pointer"
+                className="header-icon"
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             >
                 {theme === 'dark' ? (

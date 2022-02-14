@@ -1,16 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTheme } from 'next-themes';
 import axios from 'axios';
+import { DragDropContext } from 'react-beautiful-dnd';
 
-import { Header, TodoItem, FilterLinks, Footer } from '../components';
-import AddTodo from '../components/AddTodo';
+import { Header, AddTodo, TodosList, FilterLinks, Footer } from '../components';
+import { reorder } from '../utils/reorder';
 
 export default function Home() {
     const [todos, setTodos] = useState([]);
     const [filter, setFilter] = useState('All');
     const { theme, setTheme } = useTheme();
 
-    const fetchTodos = useCallback(async () => {
+    const fetchData = useCallback(async () => {
         try {
             const { data } = await axios.get('./data.json');
             setTodos(data);
@@ -20,8 +21,8 @@ export default function Home() {
     }, []);
 
     useEffect(() => {
-        fetchTodos();
-    }, [fetchTodos]);
+        fetchData();
+    }, [fetchData]);
 
     const handleDeleteTodo = (id) => {
         setTodos(todos.filter((todo) => todo.id !== id));
@@ -56,10 +57,30 @@ export default function Home() {
 
     const filteredTodos = todos.filter(FILTER_MAP[filter]);
 
+    const onDragEnd = (result) => {
+        const { destination, source } = result;
+        if (!destination) {
+            return;
+        }
+        if (
+            destination.droppableId === source.droppableId &&
+            destination.index === source.index
+        ) {
+            return;
+        }
+
+        const newItems = reorder(
+            filteredTodos,
+            source.index,
+            destination.index
+        );
+        setTodos(newItems);
+    };
+
     return (
-        <div className="relative">
+        <main>
             <div
-                className="relative h-[260px] bg-light-grayish-blue bg-cover bg-no-repeat lg:h-[320px]"
+                className="bg-desktop-img"
                 style={{
                     backgroundImage:
                         theme === 'dark'
@@ -67,42 +88,36 @@ export default function Home() {
                             : `url("/images/bg-desktop-light.jpg")`,
                 }}
             ></div>
-            <div className="absolute left-0 top-14 w-full lg:top-24">
-                <div className="top-0 left-0 mx-auto px-4 lg:w-[620px] lg:px-0">
+            <div className="main-inner-one">
+                <div className="main-inner-two">
                     <Header theme={theme} setTheme={setTheme} />
                     <AddTodo
                         onSendTodo={(todo) => setTodos([...todos, todo])}
-                        lastID={todos.reduce(
-                            (max, item) =>
-                                Number(item.id) > max ? Number(item.id) : max,
-                            0
-                        )}
+                        lastID={`todo-${todos.length}`}
                     />
-                    <div className="mt-4 divide-y divide-very-light-grayish-blue rounded-md bg-neutral shadow-lg dark:divide-very-dark-grayish-blue dark:bg-very-dark-desaturated-blue lg:mt-6">
+                    <div className="form-container">
                         {filteredTodos.length ? (
-                            <>
-                                {filteredTodos.map((todo) => (
-                                    <TodoItem
-                                        key={todo.id}
-                                        todo={todo}
-                                        onDeleteTodo={handleDeleteTodo}
-                                        onCompleteTodo={handleCompleteTodo}
-                                    />
-                                ))}
-                            </>
+                            <DragDropContext onDragEnd={onDragEnd}>
+                                <TodosList
+                                    todos={filteredTodos}
+                                    onDeleteTodo={handleDeleteTodo}
+                                    onCompleteTodo={handleCompleteTodo}
+                                />
+                            </DragDropContext>
                         ) : (
-                            <div className="flex items-center justify-center p-5">
-                                <p className="pt-1 text-center text-very-dark-grayish-blue dark:text-light-grayish-blue lg:text-body-base">
+                            <div className="no-todos">
+                                <p>
                                     {filter === 'All'
                                         ? `You do not have any todos at the moment`
                                         : `You do not have any ${filter.toLowerCase()} todos at the moment`}
                                 </p>
                             </div>
                         )}
+
                         {/* todo list footer */}
-                        <div className="flex items-center justify-between px-5 py-4">
-                            <div className="lg:w-3/12">
-                                <p className="text-dark-grayish-blue">
+                        <div className="todo-list-footer">
+                            <div className="todo-list-footer-left">
+                                <p>
                                     {
                                         todos.filter((todo) => !todo.completed)
                                             .length
@@ -110,36 +125,31 @@ export default function Home() {
                                     items left
                                 </p>
                             </div>
-                            <div className="hidden lg:flex lg:w-6/12 lg:justify-center">
+                            <div className="todo-list-footer-center">
                                 <FilterLinks
                                     filterNames={FILTER_NAMES}
                                     filter={filter}
                                     setFilter={setFilter}
                                 />
                             </div>
-                            <div className="flex justify-end lg:w-3/12">
-                                <a
-                                    className="cursor-pointer text-dark-grayish-blue hover:text-very-dark-grayish-blue dark:hover:text-very-light-gray"
-                                    onClick={handleClearCompletedTodos}
-                                >
+                            <div className="todo-list-footer-right">
+                                <a onClick={handleClearCompletedTodos}>
                                     Clear completed
                                 </a>
                             </div>
                         </div>
                     </div>
                     {/* filter links mobile */}
-                    <div className="mt-4 lg:hidden">
-                        <div className="flex items-center justify-center rounded-md bg-neutral py-4 shadow-lg dark:bg-very-dark-desaturated-blue">
-                            <FilterLinks
-                                filterNames={FILTER_NAMES}
-                                filter={filter}
-                                setFilter={setFilter}
-                            />
-                        </div>
+                    <div className="filter-links">
+                        <FilterLinks
+                            filterNames={FILTER_NAMES}
+                            filter={filter}
+                            setFilter={setFilter}
+                        />
                     </div>
                     {todos.length ? <Footer /> : null}
                 </div>
             </div>
-        </div>
+        </main>
     );
 }

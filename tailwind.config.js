@@ -40,6 +40,7 @@ module.exports = {
             fontFamily: {
                 josefin: ['Josefin Sans', ...fontFamily.sans],
             },
+            display: ['group-hover'],
         },
     },
     variants: {},

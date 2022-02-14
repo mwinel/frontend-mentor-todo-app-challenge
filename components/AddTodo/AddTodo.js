@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TextInput } from '.';
+import { TextInput } from '..';
 
 export default function AddTodo({ lastID, onSendTodo }) {
     let [title, setTitle] = useState('');
@@ -36,7 +36,7 @@ export default function AddTodo({ lastID, onSendTodo }) {
     };
 
     return (
-        <form onSubmit={handleAddTodo} className="mt-8 lg:mt-10">
+        <form onSubmit={handleAddTodo}>
             <TextInput
                 name="todo"
                 type="text"
