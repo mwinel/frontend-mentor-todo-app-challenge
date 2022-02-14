@@ -11,9 +11,7 @@ This is a solution to the [Todo app challenge on Frontend Mentor](https://www.fr
     -   [Built with](#built-with)
     -   [What I learned](#what-i-learned)
     -   [Continued development](#continued-development)
-    -   [Useful resources](#useful-resources)
 -   [Author](#author)
--   [Acknowledgments](#acknowledgments)
 
 ## Overview
 
@@ -33,8 +31,8 @@ Users should be able to:
 
 ### Links
 
--   Solution URL: [Add solution URL here](https://your-solution-url.com)
--   Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+-   Solution URL: [https://www.frontendmentor.io/solutions/nextjs-tailwindcss--mL6MjuC2](https://www.frontendmentor.io/solutions/nextjs-tailwindcss--mL6MjuC2)
+-   Live Site URL: [https://frontend-mentor-todo-app-challenge-nine.vercel.app/](https://frontend-mentor-todo-app-challenge-nine.vercel.app/)
 
 ## My process
 
@@ -52,19 +50,8 @@ In this challenge I got to learn how to drag and drop to reorder items on the li
 
 Thoughts still coming up...
 
-### Useful resources
-
--   [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
--   [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
-
 ## Author
 
 -   Website - [https://nelsonmurungi.vercel.app/](https://nelsonmurungi.vercel.app/)
 -   Frontend Mentor - [@mwinel](https://www.frontendmentor.io/profile/mwinel)
 -   Twitter - [@mwinel](https://www.twitter.com/mwinel)
-
-**Note: Delete this note and add/remove/edit lines above based on what links you'd like to share.**
-
-## Acknowledgments
-
----
